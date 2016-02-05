@@ -51,27 +51,29 @@ class ProblemSolver:
     def minimax(self, node, depth, isMaxPlayer, problemObj):
         
         if (depth == 0) or problemObj.goalTest(node.state):
-            return node
+            return problemObj.pathCost(node.state)
 
         if isMaxPlayer:
             bestValue = -self.INFINITY
             for child in node.children:
-                vNode = self.minimax(child, int(depth) - 1, False, problemObj)
-                v = problemObj.pathCost(vNode.state)
+                v = self.minimax(child, int(depth) - 1, False, problemObj)
+                child.value = v
                 bestValue = max(bestValue, v)
-                vNode.value = bestValue
-                # print child.name +","+str(child.depth)+","+str(vNode.value)
-            return vNode
+                node.value = bestValue
+                print child.name+","+ str(int(self.cuttingDepth) - child.depth)+","+ str(child.value)
+                print node.name +","+ str(int(self.cuttingDepth) - child.depth)+","+ str(node.value)
+            return bestValue
 
         else:
             bestValue = self.INFINITY
             for child in node.children:
-                vNode = self.minimax(child, int(depth) - 1, True, problemObj)
-                v = problemObj.pathCost(vNode.state)
+                v = self.minimax(child, int(depth) - 1, True, problemObj)
+                child.value = v
                 bestValue = min(bestValue, v)
-                vNode.value = bestValue
-                # print child.name +","+str(child.depth)+","+str(vNode.value)
-            return vNode
+                node.value = bestValue
+                print child.name+","+ str(int(self.cuttingDepth) - child.depth)+","+ str(child.value)
+                print node.name +","+  str(int(self.cuttingDepth) - child.depth)+"," + str(node.value)
+            return bestValue
 
         #DEBUG lines
         # print node
@@ -87,10 +89,7 @@ class ProblemSolver:
     def initMinMax(self):
         problemObj = Problem(self.initialState, self.boardValue,self.player)
         node = Node(self.initialState, None, self.cuttingDepth,-float('inf'),"root",problemObj, self.player)   
-        result =  self.minimax(node, self.cuttingDepth, True, problemObj)
-        self.printState(result.state)
-        print result.value
-        print result.name
+        print self.minimax(node, self.cuttingDepth, True, problemObj)
         
 
 
