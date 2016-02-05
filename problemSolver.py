@@ -47,12 +47,18 @@ class ProblemSolver:
         # print max(stateCost)
         # print stateCost
 
-
+    """ minimax algorithm
+    :param node: node with complete set of children reachable at given depth
+    :param depth: maxmimum depth desired in search tree. Root is at depth 0
+    :param isMaxPlayer: First player is Max player. Hence, True if it is first player
+    :param problemObj: Object of problem class. Provides defination and helper function for given problem 
+    """
     def minimax(self, node, depth, isMaxPlayer, problemObj):
-        
+        #check for termination condition
         if (depth == 0) or problemObj.goalTest(node.state):
             return problemObj.pathCost(node.state)
-
+    
+        #if it is maximizing player
         if isMaxPlayer:
             bestValue = -self.INFINITY
             for child in node.children:
@@ -61,9 +67,11 @@ class ProblemSolver:
                 bestValue = max(bestValue, v)
                 node.value = bestValue
                 print child.name+","+ str(int(self.cuttingDepth) - child.depth)+","+ str(child.value)
-                print node.name +","+ str(int(self.cuttingDepth) - child.depth)+","+ str(node.value)
+                print node.name +","+ str(int(self.cuttingDepth) - int(node.depth))+","+ str(node.value)
+            print "Returning bestValue: ", bestValue
             return bestValue
-
+        
+        #if it is minimizing player
         else:
             bestValue = self.INFINITY
             for child in node.children:
@@ -72,18 +80,9 @@ class ProblemSolver:
                 bestValue = min(bestValue, v)
                 node.value = bestValue
                 print child.name+","+ str(int(self.cuttingDepth) - child.depth)+","+ str(child.value)
-                print node.name +","+  str(int(self.cuttingDepth) - child.depth)+"," + str(node.value)
+                print node.name +","+  str(int(self.cuttingDepth) - int(node.depth))+"," + str(node.value)
+            print "Returning bestValue: ", bestValue
             return bestValue
-
-        #DEBUG lines
-        # print node
-        # for child in node.children:
-        #     print child.name +" Depth = " , child.depth , " value: ", child.value
-        #     for grandChild in child.children:
-        #         print "   "+grandChild.name + " Depth = " , grandChild.depth, " value: ", grandChild.value
-
-
-
 
 
     def initMinMax(self):
