@@ -5,6 +5,9 @@ class Problem:
         self.initialState = initialState
         self.boardValue = boardValue
         self.player = player
+        self.boardRowIds = ['1','2','3','4','5']
+        self.boardColIds = ['A', 'B', 'C', 'D', 'E']
+        self.stateNames = []
 
     def goalTest(self, state):
         return ('*' not in (x[0] for x in state)) #return false if there is any unoccupied block ('*') 
@@ -29,6 +32,7 @@ class Problem:
     def possibleStates(self, state, turnTakingPlayer):
         moveY = [-1,1,0,0 ]
         moveX = [0, 0,-1,1]
+        self.stateNames = []
         opponent = 'X' if turnTakingPlayer == 'O' else 'O'
         possibleStates = []
         for i in range(0,5):
@@ -37,6 +41,7 @@ class Problem:
                     isRaid = False
                     temp = copy.deepcopy(state)
                     temp[i][j] = turnTakingPlayer
+                    self.stateNames.append(self.boardColIds[j]+self.boardRowIds[i]) 
                     # also convert any adjacent opponent's block (raid)
                     for x in range(0,4):
                         indexY = i + moveY[x]

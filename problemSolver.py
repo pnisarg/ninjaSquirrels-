@@ -1,4 +1,5 @@
 from problem import Problem
+from node import Node
 
 class ProblemSolver:
 
@@ -41,4 +42,14 @@ class ProblemSolver:
         print max(stateCost)
         print stateCost
         self.outputState(nextState)
+
+    def test(self):
+        problemObj = Problem(self.initialState, self.boardValue,self.player)
+        node = Node(self.initialState, None, self.cuttingDepth,0,"root",problemObj, 'X')   
+        print node
+        for child in node.children:
+            print child.name +" Depth = " , child.depth , " value: ", child.value
+            for grandChild in child.children:
+                print "   "+grandChild.name + " Depth = " , grandChild.depth , " value: ", grandChild.value
+
         

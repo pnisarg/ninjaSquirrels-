@@ -24,8 +24,10 @@ class Controller:
     
     def solveProblem(self):
         problemSolverObj = ProblemSolver(self.currentBoard, self.boardValue, self.player, self.cuttingDepth)
-        if int(self.algorithm) == 1:
-            problemSolverObj.greedyBFS()
+        problemSolverObj.test()
+        # if int(self.algorithm) == 1:
+        #     problemSolverObj.greedyBFS()
+                
 
             
 def main():
@@ -33,9 +35,8 @@ def main():
     controllerObj = Controller()
     controllerObj.readInput()
     controllerObj.solveProblem()
-            
     
-    
+             
 
 if __name__ == "__main__":
     main()
