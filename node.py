@@ -2,7 +2,9 @@ from problem import Problem
 import copy
         
 class Node:
-    def __init__(self, state = [], parent = None, depth = 0, value = 0, name = "root", problemObj = None, turnTakingPlayer = 'X'):
+    INFINITY = float('inf')
+    
+    def __init__(self, state = [], parent = None, depth = 0, value = -float('inf'), name = "root", problemObj = None, turnTakingPlayer = 'X'):
         self.state = state
         self.parent = parent
         self.depth = depth
@@ -23,7 +25,11 @@ class Node:
             stateNames = copy.deepcopy(self.problemObj.stateNames)
             i = 0
             for possibleState in possibleStates:
-                # keeping value to 0 for nowop
-                self.children.append(Node(possibleState, self, int(self.depth) - 1, 0, 
+                # if your player is 'X' (then max player is 'X')
+                if self.problemObj.player != self.turnTakingPlayer:
+                    self.children.append(Node(possibleState, self, int(self.depth) - 1, -self.INFINITY, 
+                                          stateNames[i], self.problemObj, 'O' if self.turnTakingPlayer == 'X' else 'X'))
+                else:
+                    self.children.append(Node(possibleState, self, int(self.depth) - 1, self.INFINITY, 
                                           stateNames[i], self.problemObj, 'O' if self.turnTakingPlayer == 'X' else 'X'))
                 i = i+1

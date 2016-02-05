@@ -8,10 +8,10 @@ class Problem:
         self.boardRowIds = ['1','2','3','4','5']
         self.boardColIds = ['A', 'B', 'C', 'D', 'E']
         self.stateNames = []
-
+    
     def goalTest(self, state):
         return ('*' not in (x[0] for x in state)) #return false if there is any unoccupied block ('*') 
-
+    
     def pathCost(self, state):
         #returns value of evaulation function
         countX = 0
