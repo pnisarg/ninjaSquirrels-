@@ -5,6 +5,7 @@ class ProblemSolver:
     
     INFINITY = float("inf")
     logFile = "" 
+    returnFlag = False
     def __init__(self, initialState, boardValue, player, cuttingDepth):
         self.initialState = initialState
         self.boardValue = boardValue
@@ -61,44 +62,50 @@ class ProblemSolver:
         #if it is maximizing player
         if isMaxPlayer:
             bestValue = -self.INFINITY
-            self.logFile.write(node.name +","+ str(int(self.cuttingDepth) - int(node.depth))
-                               +","+ str(node.value).replace('inf','Infinity')+"\n")
+            self.logFile.write("\n"+node.name +","+ str(int(self.cuttingDepth) - int(node.depth))
+                               +","+ str(node.value).replace('inf','Infinity'))
+            self.returnFlag = False
             for child in node.children:
                 v = self.minimax(child, int(depth) - 1, False, problemObj)
                 child.value = v
                 bestValue = max(bestValue, v)
                 node.value = bestValue
-                self.logFile.write(child.name+","+ str(int(self.cuttingDepth) - child.depth)
-                                   +","+ str(child.value).replace('inf','Infinity')+"\n")
-                self.logFile.write(node.name +","+ str(int(self.cuttingDepth) - int(node.depth))
-                                   +","+ str(node.value).replace('inf','Infinity')+"\n")
+                if not self.returnFlag:
+                    self.logFile.write("\n"+child.name+","+ str(int(self.cuttingDepth) - child.depth)
+                                   +","+ str(child.value).replace('inf','Infinity'))
+                self.logFile.write("\n"+node.name +","+ str(int(self.cuttingDepth) - int(node.depth))
+                                   +","+ str(node.value).replace('inf','Infinity'))
                 # print child.name+","+ str(int(self.cuttingDepth) - child.depth)+","+ str(child.value)
                 # print node.name +","+ str(int(self.cuttingDepth) - int(node.depth))+","+ str(node.value)
+            self.returnFlag = True
             return bestValue
         
         #if it is minimizing player
         else:
             bestValue = self.INFINITY
-            self.logFile.write(node.name +","+ str(int(self.cuttingDepth) - int(node.depth))
-                               +","+ str(node.value).replace('inf','Infinity')+"\n")
+            self.logFile.write("\n"+node.name +","+ str(int(self.cuttingDepth) - int(node.depth))
+                               +","+ str(node.value).replace('inf','Infinity'))
+            self.returnFlag = False
             for child in node.children:
                 v = self.minimax(child, int(depth) - 1, True, problemObj)
                 child.value = v
                 bestValue = min(bestValue, v)
                 node.value = bestValue
-                self.logFile.write(child.name+","+ str(int(self.cuttingDepth) - child.depth)
-                                   +","+ str(child.value).replace('inf','Infinity')+"\n")
-                self.logFile.write(node.name +","+ str(int(self.cuttingDepth) - int(node.depth))
-                                   +","+ str(node.value).replace('inf','Infinity')+"\n")
+                if not self.returnFlag:
+                    self.logFile.write("\n"+child.name+","+ str(int(self.cuttingDepth) - child.depth)
+                                   +","+ str(child.value).replace('inf','Infinity'))
+                self.logFile.write("\n"+node.name +","+ str(int(self.cuttingDepth) - int(node.depth))
+                                   +","+ str(node.value).replace('inf','Infinity'))
                 # print child.name+","+ str(int(self.cuttingDepth) - child.depth)+","+ str(child.value)
                 # print node.name +","+  str(int(self.cuttingDepth) - int(node.depth))+"," + str(node.value)
+            self.returnFlag = True
             return bestValue
 
 
     def initMinMax(self):
         problemObj = Problem(self.initialState, self.boardValue,self.player)
         self.logFile = open("traverse_log.txt", "w")
-        self.logFile.write("Node,Depth,Value" +"\n")
+        self.logFile.write("Node,Depth,Value")
         # self.logFile.write("root,0,-Infinity\n")
         node = Node(self.initialState, None, self.cuttingDepth,-float('inf'),"root",problemObj, self.player)   
         bestValue = self.minimax(node, self.cuttingDepth, True, problemObj)
