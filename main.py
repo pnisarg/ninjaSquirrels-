@@ -28,6 +28,8 @@ class Controller:
             problemSolverObj.greedyBFS()
         elif int(self.algorithm) == 2:
             problemSolverObj.initMinMax()
+        elif int(self.algorithm) == 3:
+            problemSolverObj.initAlphaBeta()
 
             
 def main():
