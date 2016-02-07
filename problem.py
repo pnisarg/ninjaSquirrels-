@@ -10,8 +10,11 @@ class Problem:
         self.stateNames = []
     
     def goalTest(self, state):
-        return ('*' not in (x[0] for x in state)) #return false if there is any unoccupied block ('*') 
-    
+        for x in state:
+            if x.count('*') > 0:
+                return False
+        return True
+
     def pathCost(self, state):
         #returns value of evaulation function
         countX = 0

@@ -44,7 +44,7 @@ class ProblemSolver:
         for state in possibleStates:
             stateCost.append(problemObj.pathCost(state))
         nextState = possibleStates[stateCost.index(max(stateCost))]
-        self.printState(nextState)
+        # self.printState(nextState)
         self.outputState(nextState)  # save output to a file.
 
         # DEBUG lines
@@ -222,7 +222,6 @@ class ProblemSolver:
         self.logFile.write("Node,Depth,Value,Alpha,Beta")
         node = Node(self.initialState, None, self.cuttingDepth, -INFINITY, "root", problemObj, self.player)   
         bestValue = self.alphabeta(node, self.cuttingDepth, -INFINITY, INFINITY, True, problemObj)
-        print bestValue
         for childNode in node.children:
             if childNode.value == bestValue:
                 self.outputState(childNode.state)  # stores result in next_state.txt file
