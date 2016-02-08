@@ -15,6 +15,14 @@ class Problem:
                 return False
         return True
 
+    @staticmethod
+    def goalTest(state):
+        for x in state:
+            if x.count('*') > 0:
+                return False
+        return True
+
+    
     def pathCost(self, state):
         #returns value of evaulation function
         countX = 0
