@@ -64,22 +64,23 @@ class ProblemSolver:
         return nextState
 
 
-    """ minimax algorithm
+    """
+    minimax algorithm
     :param node: node with complete set of children reachable at given depth
     :param depth: maxmimum depth desired in search tree. Root is at depth 0
     :param isMaxPlayer: First player is Max player. Hence, True if it is first player
     :param problemObj: Object of problem class. Provides defination and helper function for given problem 
-    """
+    """ 
     def minimax(self, node, depth, isMaxPlayer, problemObj):
         # check for termination condition
         if (depth == 0) or problemObj.goalTest(node.state):
             return problemObj.pathCost(node.state)
-
+    
         # if it is maximizing player
         if isMaxPlayer:
             bestValue = -self.INFINITY
             self.logFile.write("\n" + node.name + "," + str(int(self.cuttingDepth) - int(node.depth))
-                    + "," + str(node.value).replace('inf', 'Infinity'))
+                               + "," + str(node.value).replace('inf', 'Infinity'))
             self.returnFlag = False
             for child in node.children:
                 v = self.minimax(child, int(depth) - 1, False, problemObj)
@@ -88,19 +89,19 @@ class ProblemSolver:
                 node.value = bestValue
                 if not self.returnFlag:
                     self.logFile.write("\n" + child.name + "," + str(int(self.cuttingDepth) - child.depth)
-                            + "," + str(child.value).replace('inf', 'Infinity'))
-                    self.logFile.write("\n" + node.name + "," + str(int(self.cuttingDepth) - int(node.depth))
-                            + "," + str(node.value).replace('inf', 'Infinity'))
-                    # print child.name+","+ str(int(self.cuttingDepth) - child.depth)+","+ str(child.value)
+                                   + "," + str(child.value).replace('inf', 'Infinity'))
+                self.logFile.write("\n" + node.name + "," + str(int(self.cuttingDepth) - int(node.depth))
+                                   + "," + str(node.value).replace('inf', 'Infinity'))
+                # print child.name+","+ str(int(self.cuttingDepth) - child.depth)+","+ str(child.value)
                 # print node.name +","+ str(int(self.cuttingDepth) - int(node.depth))+","+ str(node.value)
             self.returnFlag = True
             return bestValue
-
+        
         # if it is minimizing player
         else:
             bestValue = self.INFINITY
             self.logFile.write("\n" + node.name + "," + str(int(self.cuttingDepth) - int(node.depth))
-                    + "," + str(node.value).replace('inf', 'Infinity'))
+                               + "," + str(node.value).replace('inf', 'Infinity'))
             self.returnFlag = False
             for child in node.children:
                 v = self.minimax(child, int(depth) - 1, True, problemObj)
@@ -109,10 +110,10 @@ class ProblemSolver:
                 node.value = bestValue
                 if not self.returnFlag:
                     self.logFile.write("\n" + child.name + "," + str(int(self.cuttingDepth) - child.depth)
-                            + "," + str(child.value).replace('inf', 'Infinity'))
-                    self.logFile.write("\n" + node.name + "," + str(int(self.cuttingDepth) - int(node.depth))
-                            + "," + str(node.value).replace('inf', 'Infinity'))
-                    # print child.name+","+ str(int(self.cuttingDepth) - child.depth)+","+ str(child.value)
+                                   + "," + str(child.value).replace('inf', 'Infinity'))
+                self.logFile.write("\n" + node.name + "," + str(int(self.cuttingDepth) - int(node.depth))
+                                   + "," + str(node.value).replace('inf', 'Infinity'))
+                # print child.name+","+ str(int(self.cuttingDepth) - child.depth)+","+ str(child.value)
                 # print node.name +","+  str(int(self.cuttingDepth) - int(node.depth))+"," + str(node.value)
             self.returnFlag = True
             return bestValue
@@ -147,13 +148,13 @@ class ProblemSolver:
         # check for termination condition
         if (depth == 0) or problemObj.goalTest(node.state):
             return problemObj.pathCost(node.state)
-
+        
         # if it is maximizing player
         if isMaxPlayer:
             bestValue = -self.INFINITY
             self.logFile.write("\n" + node.name + "," + str(int(self.cuttingDepth) - int(node.depth))
-                    + "," + str(node.value).replace('inf', 'Infinity')
-                    +","+str(alpha).replace('inf', 'Infinity')+","+str(beta).replace('inf', 'Infinity'))
+                               + "," + str(node.value).replace('inf', 'Infinity')
+                               +","+str(alpha).replace('inf', 'Infinity')+","+str(beta).replace('inf', 'Infinity'))
             #all the following flags are used to match required output file specification.
             #they don't server any purpose in actual alpha-beta algorithm
             self.returnFlag = False
@@ -165,17 +166,17 @@ class ProblemSolver:
                 bestValue = max(bestValue, value)
                 if not self.returnFlag:
                     if self.globalBreakFlag:
-                        self.logFile.write("\n" + child.name + "," + str(int(self.cuttingDepth) - child.depth)
-                                + "," + str(child.value).replace('inf', 'Infinity')
-                                +","+str(alpha).replace('inf', 'Infinity')+","+str(self.globalBeta).replace('inf', 'Infinity'))
-                        self.globalBreakFlag = False
+                         self.logFile.write("\n" + child.name + "," + str(int(self.cuttingDepth) - child.depth)
+                                   + "," + str(child.value).replace('inf', 'Infinity')
+                                   +","+str(alpha).replace('inf', 'Infinity')+","+str(self.globalBeta).replace('inf', 'Infinity'))
+                         self.globalBreakFlag = False
                     else:
                         self.logFile.write("\n" + child.name + "," + str(int(self.cuttingDepth) - child.depth)
-                                + "," + str(child.value).replace('inf', 'Infinity')
-                                +","+str(alpha).replace('inf', 'Infinity')+","+str(beta).replace('inf', 'Infinity'))
+                                   + "," + str(child.value).replace('inf', 'Infinity')
+                                   +","+str(alpha).replace('inf', 'Infinity')+","+str(beta).replace('inf', 'Infinity'))
+               
 
-
-                        self.globalAlpha = alpha   #useless; variable to store alpha value just for the purpose of output format 
+                self.globalAlpha = alpha   #useless; variable to store alpha value just for the purpose of output format 
                 alpha = max(alpha, bestValue)
                 node.value = bestValue
                 if beta <= alpha:
@@ -183,18 +184,18 @@ class ProblemSolver:
                     self.globalBreakFlag = True
                     break
                 self.logFile.write("\n" + node.name + "," + str(int(self.cuttingDepth) - int(node.depth))
-                        + "," + str(node.value).replace('inf', 'Infinity')
-                        +","+str(alpha).replace('inf', 'Infinity')+","+str(beta).replace('inf', 'Infinity'))
-                if not breakFlag:
-                    self.returnFlag = True
+                               + "," + str(node.value).replace('inf', 'Infinity')
+                               +","+str(alpha).replace('inf', 'Infinity')+","+str(beta).replace('inf', 'Infinity'))
+            if not breakFlag:
+                self.returnFlag = True
             return bestValue
-
+        
         # if it is minimizing player
         else:
             bestValue = self.INFINITY
             self.logFile.write("\n" + node.name + "," + str(int(self.cuttingDepth) - int(node.depth))
-                    + "," + str(node.value).replace('inf', 'Infinity')
-                    +","+str(alpha).replace('inf', 'Infinity')+","+str(beta).replace('inf', 'Infinity'))
+                               + "," + str(node.value).replace('inf', 'Infinity')
+                               +","+str(alpha).replace('inf', 'Infinity')+","+str(beta).replace('inf', 'Infinity'))
             self.returnFlag = False
             breakFlag = False
             self.globalBreakFlag = False
@@ -202,18 +203,18 @@ class ProblemSolver:
                 value = self.alphabeta(child, int(depth) - 1, alpha, beta, True, problemObj)
                 child.value = value
                 bestValue = min(bestValue, value)
-
+                
                 if not self.returnFlag:
                     if self.globalBreakFlag:
-                        self.logFile.write("\n" + child.name + "," + str(int(self.cuttingDepth) - child.depth)
-                                + "," + str(child.value).replace('inf', 'Infinity')
-                                +","+str(self.globalAlpha).replace('inf', 'Infinity')+","+str(beta).replace('inf', 'Infinity'))
-                        self.globalBreakFlag = False
+                         self.logFile.write("\n" + child.name + "," + str(int(self.cuttingDepth) - child.depth)
+                                   + "," + str(child.value).replace('inf', 'Infinity')
+                                   +","+str(self.globalAlpha).replace('inf', 'Infinity')+","+str(beta).replace('inf', 'Infinity'))
+                         self.globalBreakFlag = False
                     else:
                         self.logFile.write("\n" + child.name + "," + str(int(self.cuttingDepth) - child.depth)
-                                + "," + str(child.value).replace('inf', 'Infinity')
-                                +","+str(alpha).replace('inf', 'Infinity')+","+str(beta).replace('inf', 'Infinity'))
-                        self.globalBeta = beta   #useless; variable to store beta value just for the purpose of output format 
+                                   + "," + str(child.value).replace('inf', 'Infinity')
+                                   +","+str(alpha).replace('inf', 'Infinity')+","+str(beta).replace('inf', 'Infinity'))
+                self.globalBeta = beta   #useless; variable to store beta value just for the purpose of output format 
                 beta = min(beta, bestValue)
                 node.value = bestValue
                 if beta <= alpha:
@@ -221,13 +222,13 @@ class ProblemSolver:
                     self.globalBreakFlag = True
                     break
                 self.logFile.write("\n" + node.name + "," + str(int(self.cuttingDepth) - int(node.depth))
-                        + "," + str(node.value).replace('inf', 'Infinity')
-                        +","+str(alpha).replace('inf', 'Infinity')+","+str(beta).replace('inf', 'Infinity'))
-
-                if not breakFlag:
-                    self.returnFlag = True
+                               + "," + str(node.value).replace('inf', 'Infinity')
+                               +","+str(alpha).replace('inf', 'Infinity')+","+str(beta).replace('inf', 'Infinity'))
+            
+            if not breakFlag:
+                self.returnFlag = True
             return bestValue
-
+ 
     def initAlphaBeta(self):
         INFINITY = float('inf')
         problemObj = Problem(self.initialState, self.boardValue, self.player)
@@ -241,7 +242,8 @@ class ProblemSolver:
                 # self.printState(childNode.state)
                 # print childNode.value
                 break
-        self.logFile.close()       
+        self.logFile.close()   
+         
 
     def minimaxBattle(self, node, depth, isMaxPlayer, problemObj):
         if (depth == 0) or problemObj.goalTest(node.state):
