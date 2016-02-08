@@ -304,7 +304,6 @@ class ProblemSolver:
             return bestValue
 
     def initBattleSimulation(self, player1Algo, player2Algo, opponent, player2CuttingDepth):
-        algoList = ['','greedyBFS()', 'minimax()']
         nextState = self.initialState
         player = self.player
         INFINITY = float('inf')
@@ -337,7 +336,7 @@ class ProblemSolver:
                     bestValue = self.alphabetaBattle(node, player2CuttingDepth, -INFINITY, INFINITY, True, problemObj)
                     nextState = self.getNextState(node, bestValue)
 
-            self.printState(nextState)
+            # self.printState(nextState)
             for x in nextState:
                 outFile.write(''.join(x))
                 outFile.write("\n")
