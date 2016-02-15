@@ -1,3 +1,9 @@
+"""
+__author__ = "Nisarg Pate"
+__version__ = "1.0.1"
+__date__ = "02/06/2016"
+"""
+
 from node import Node
 from problem import Problem
 import sys
